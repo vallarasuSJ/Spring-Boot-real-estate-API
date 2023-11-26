@@ -12,6 +12,7 @@ import com.restapi.repository.UserRepository;
 import com.restapi.request.BookingRequest;
 import com.restapi.response.AddressResponse;
 import com.restapi.response.BookingResponse;
+import com.restapi.response.CustomerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,20 +33,27 @@ public class BookingService {
     @Autowired
     private BookedRepository bookedRepository;
 
-    public BookingResponse findAll() {
+    public List<BookingResponse> findAll() {
         List<Booked> bookedList = bookedRepository.findAll();
-        return bookingDto.mapToBookingResponse(bookedList);
+        List<BookingResponse> bookingResponses=bookingDto.mapToBookingResponse(bookedList);
+        return bookingResponses;
     }
 
-    public BookingResponse createBooking(BookingRequest bookingRequest) {
+    public List<BookingResponse> createBooking(BookingRequest bookingRequest) {
         Booked booked=new Booked();
-        AppUser appUser=userRepository.findById(bookingRequest.getUserId())
-                .orElseThrow(()->new ResourceNotFoundException("userId","userId",bookingRequest.getUserId()));
+        AppUser appUser=userRepository.findById(bookingRequest.getCustomerId())
+                .orElseThrow(()->new ResourceNotFoundException("userId","userId",bookingRequest.getCustomerId()));
         booked.setAppUser(appUser);
-        Property property=propertyRepository.findById(bookingRequest.getPropertyId())
-                .orElseThrow(()->new ResourceNotFoundException("propertyId","propertyId",bookingRequest.getPropertyId()));
+        Property property=propertyRepository.findById(bookingRequest.getId())
+                .orElseThrow(()->new ResourceNotFoundException("Id","propertyId",bookingRequest.getId()));
         booked.setProperty(property);
         bookedRepository.save(booked);
+        return findAll();
+    }
+
+
+    public List<BookingResponse> cancelBooking(Long id) {
+        bookedRepository.deleteById(id);
         return findAll();
     }
 }

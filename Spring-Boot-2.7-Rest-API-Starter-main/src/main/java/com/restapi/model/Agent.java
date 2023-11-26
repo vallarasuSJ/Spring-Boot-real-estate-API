@@ -19,18 +19,17 @@ public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false,length =200)
     private String AgentName;
 
+    @Column(nullable = false,length = 200)
+    private Long contactNumber;
+
     @OneToOne
     @JoinColumn(name = "appUser_id",referencedColumnName = "id")
     private AppUser appUser;
-
-    @OneToOne
-    @JoinColumn(name = "address_id",referencedColumnName = "id")
-    private Address address;
 
     @JsonIgnore
     @OneToMany(mappedBy = "agent")

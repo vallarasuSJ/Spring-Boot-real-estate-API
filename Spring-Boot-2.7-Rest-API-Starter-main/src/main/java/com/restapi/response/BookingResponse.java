@@ -5,12 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class BookingResponse {
-    private List<Booked> bookedList;
+    private Long propertyId;
+    private String name;
+    private String propertyName;
+    private String Address;
+    private String city;
+    private Long zipcode;
+    private Long contactNumber;
+    private Double price;
+    private LocalDateTime bookedTime;
+
 }

@@ -1,6 +1,9 @@
 package com.restapi.controller.admin;
 
 import com.restapi.model.Customer;
+import com.restapi.response.AgentPropertyResponse;
+import com.restapi.response.BookingResponse;
+import com.restapi.response.CustomerResponse;
 import com.restapi.response.common.APIResponse;
 import com.restapi.service.AddressService;
 import com.restapi.service.CustomerService;
@@ -27,9 +30,17 @@ public class AdminCustomerController {
 
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllCustomers(){
-        List<Customer> customerList=customerService.findAll();
+        List<CustomerResponse> customerResponses=customerService.findAll();
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(customerList);
+        apiResponse.setData(customerResponses);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+
+    @GetMapping("/bookings/all")
+    public ResponseEntity<APIResponse> getAgentPropertyDetails(){
+        List<BookingResponse> customerBookings=customerService.findCustomerBookings();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(customerBookings);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import com.restapi.request.PropertyRequest;
 import com.restapi.response.PropertyResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,8 +20,33 @@ public class PropertyDto {
         return property;
     }
 
-    public PropertyResponse mapToPropertyResponse(List<Property> propertyList) {
-        return new PropertyResponse(propertyList);
+    public List<PropertyResponse> mapToPropertyResponse(List<Property> propertyList) {
+       List<PropertyResponse>propertyResponses=new ArrayList<>();
+       for(Property property:propertyList){
+           PropertyResponse propertyResponse=new PropertyResponse();
+           propertyResponse.setId(property.getId());
+           propertyResponse.setPropertyName(property.getPropertyName());
+           propertyResponse.setAddress(property.getAddress().getAddress());
+           propertyResponse.setCity(property.getAddress().getCity());
+           propertyResponse.setZipcode(property.getAddress().getZipcode());
+           propertyResponse.setPhoto(property.getPhoto());
+           propertyResponse.setPrice(property.getPrice());
+           propertyResponses.add(propertyResponse);
+       }
+       return propertyResponses;
+    }
+
+    public PropertyResponse mapToPropertyDetail(Property property) {
+        PropertyResponse propertyResponse=new PropertyResponse();
+        propertyResponse.setId(property.getId());
+        propertyResponse.setPropertyName(property.getPropertyName());
+        propertyResponse.setPrice(property.getPrice());
+        propertyResponse.setAddressId(property.getAddress().getId());
+        propertyResponse.setAddress(property.getAddress().getAddress());
+        propertyResponse.setCity(property.getAddress().getCity());
+        propertyResponse.setZipcode(property.getAddress().getZipcode());
+        propertyResponse.setPhoto(property.getPhoto());
+        return propertyResponse;
     }
 
 }

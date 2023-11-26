@@ -21,13 +21,12 @@ public class Customer {
     @Column(nullable = false,length =200)
     private String CustomerName;
 
+    @Column(nullable = false,length = 200)
+    private Long contactNumber;
+
     @OneToOne
     @JoinColumn(name = "appUser_id",referencedColumnName = "id")
     private AppUser appUser;
-
-    @OneToOne
-    @JoinColumn(name = "address_id",referencedColumnName = "id")
-    private Address address;
 
 
 }

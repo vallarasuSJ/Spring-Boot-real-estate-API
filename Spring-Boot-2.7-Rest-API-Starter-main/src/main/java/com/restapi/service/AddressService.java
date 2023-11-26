@@ -7,6 +7,7 @@ import com.restapi.model.AppUser;
 import com.restapi.repository.AddressRepository;
 import com.restapi.repository.UserRepository;
 import com.restapi.request.AddressRequest;
+import com.restapi.request.PropertyRequest;
 import com.restapi.response.AddressResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class AddressService {
         return addressDto.mapToAddressResponse(addressList);
     }
 
-    public AddressResponse create(AddressRequest addressRequest) {
-        Address address=AddressDto.mapToAddress(addressRequest);
+    public AddressResponse create(PropertyRequest propertyRequest) {
+        Address address=AddressDto.mapToAddress(propertyRequest);
         addressRepository.save(address);
         return findAll();
     }

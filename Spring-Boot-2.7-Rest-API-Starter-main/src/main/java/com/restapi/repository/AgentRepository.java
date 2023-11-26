@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AgentRepository extends JpaRepository<Agent, Integer> {
+public interface AgentRepository extends JpaRepository<Agent, Long> {
 
 }

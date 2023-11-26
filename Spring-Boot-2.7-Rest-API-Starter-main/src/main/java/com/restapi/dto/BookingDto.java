@@ -1,15 +1,31 @@
 package com.restapi.dto;
 
 import com.restapi.model.Booked;
+import com.restapi.request.BookingRequest;
 import com.restapi.response.BookingResponse;
 import com.restapi.service.BookingService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class BookingDto {
-    public BookingResponse mapToBookingResponse(List<Booked> bookedList) {
-        return new BookingResponse(bookedList);
+    public List<BookingResponse> mapToBookingResponse(List<Booked> bookedList) {
+        List<BookingResponse> bookingResponses=new ArrayList<>();
+        for(Booked booked:bookedList){
+            BookingResponse bookingResponse=new BookingResponse();
+            bookingResponse.setPropertyId(booked.getId());
+            bookingResponse.setName(booked.getProperty().getAgent().getAgentName());
+            bookingResponse.setPropertyName(booked.getProperty().getPropertyName());
+            bookingResponse.setPrice(booked.getProperty().getPrice());
+            bookingResponse.setAddress(booked.getProperty().getAddress().getAddress());
+            bookingResponse.setBookedTime(booked.getBookedTime());
+            bookingResponse.setCity(booked.getProperty().getAddress().getCity());
+            bookingResponse.setContactNumber(booked.getProperty().getAgent().getContactNumber());
+            bookingResponses.add(bookingResponse);
+        }
+        return bookingResponses;
     }
+
 }

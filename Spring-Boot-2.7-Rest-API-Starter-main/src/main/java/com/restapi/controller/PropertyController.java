@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +28,9 @@ public class PropertyController {
 
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllProperties(){
-        List<Property> propertyList=propertyService.findAll().getPropertyList();
+        List<PropertyResponse> propertyList=propertyService.findAll();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(propertyList);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
-
     }
 }

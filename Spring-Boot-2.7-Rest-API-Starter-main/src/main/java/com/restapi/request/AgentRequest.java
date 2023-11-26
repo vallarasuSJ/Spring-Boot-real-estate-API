@@ -20,10 +20,9 @@ public class AgentRequest {
     private String agentName;
 
     @NotNull(message = "userId cannot be null")
-    @Digits(integer = 1, fraction = 0, message = "user id must be a number with a maximum of 1 digit")
     private Long userId;
 
-    @NotNull(message = "addressId cannot be null")
-    @Digits(integer = 1, fraction = 0, message = "address id must be a number with a maximum of 1 digit")
-    private Integer addressId;
+    @NotNull(message = "Contact number cannot be null")
+    @Digits(integer = 10, fraction = 0, message = "Contact number must be a number with a maximum of 10 digits")
+    private Long contactNumber;
 }

@@ -1,6 +1,7 @@
 package com.restapi.controller.admin;
 
 import com.restapi.model.Property;
+import com.restapi.request.PropertyRequest;
 import com.restapi.response.PropertyResponse;
 import com.restapi.response.common.APIResponse;
 import com.restapi.service.AdminService;
@@ -24,17 +25,17 @@ public class AdminPropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllProperties() {
-        List<Property> propertyList = propertyService.findAll().getPropertyList();
+        List<PropertyResponse> propertyList = propertyService.findAll();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(propertyList);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/{propertyId}")
-    public ResponseEntity<APIResponse> allowProperty(@PathVariable Integer propertyId) {
-        PropertyResponse propertyResponse = adminService.allowProperty(propertyId);
+    @PutMapping("/update")
+    public ResponseEntity<APIResponse> allowProperty(@RequestBody PropertyRequest propertyRequest) {
+        Property property = adminService.allowProperty(propertyRequest);
         return getAllProperties();
     }
 }

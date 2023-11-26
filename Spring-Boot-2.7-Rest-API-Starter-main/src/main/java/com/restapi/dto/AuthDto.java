@@ -1,9 +1,15 @@
 package com.restapi.dto;
 
 import com.restapi.model.AppUser;
+import com.restapi.model.Role;
+import com.restapi.repository.RoleRepository;
 import com.restapi.request.RegisterRequest;
 import com.restapi.response.AuthResponse;
+import com.restapi.response.RoleResponse;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AuthDto {
@@ -22,6 +28,17 @@ public class AuthDto {
         authResponse.setId(appUser.getId());
         authResponse.setName(appUser.getName());
         authResponse.setUsername(appUser.getUsername());
+        authResponse.setRole(appUser.getRoles().getName());
         return authResponse;
+    }
+
+    public List<RoleResponse> maptoRole(List<Role> roleList) {
+        List<RoleResponse> roleResponseList=new ArrayList<>();
+        for(Role role:roleList){
+            RoleResponse roleResponse=new RoleResponse();
+            roleResponse.setRole(role.getName());
+            roleResponseList.add(roleResponse);
+        }
+        return roleResponseList;
     }
 }

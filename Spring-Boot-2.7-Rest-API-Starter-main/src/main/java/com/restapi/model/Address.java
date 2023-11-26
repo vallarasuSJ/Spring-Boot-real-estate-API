@@ -16,7 +16,7 @@ import java.util.List;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false,length = 200)
     private String address;
@@ -28,19 +28,15 @@ public class Address {
     private Long zipcode;
 
     @Column(nullable = false,length = 200)
-    private Long contactNumber;
+    private Long contactNumber= 0L;
 
     @JsonIgnore
     @OneToOne(mappedBy = "address")
     private Property property;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "address")
-    private Customer customer;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "address")
-    private Agent agent;
+
+
 
 
 

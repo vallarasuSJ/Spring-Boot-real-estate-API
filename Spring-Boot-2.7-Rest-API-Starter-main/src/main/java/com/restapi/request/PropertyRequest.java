@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 @ToString
 public class PropertyRequest {
 
-    private Integer id;
+    private Long id;
 
     private boolean isApproved;
 
@@ -28,10 +28,19 @@ public class PropertyRequest {
     private String  propertyName;
 
     @NotNull(message = "agentId cannot be null")
-    @Digits(integer = 1, fraction = 0, message = "agent id must be a number with a maximum of 1 digit")
-    private Integer agentId;
+    private Long agentId;
 
-    @NotNull(message = "addressId cannot be null")
-    @Digits(integer = 1, fraction = 0, message = "address id must be a number with a maximum of 1 digit")
-    private Integer addressId;
+    @NotEmpty
+    @Size(min = 3, message = "address should have at least 3 characters")
+    private String address;
+
+    @NotEmpty
+    @Size(min = 3, message = "city should have at least 3 characters")
+    private String city;
+
+    @NotNull(message = "zipcode cannot be null")
+    @Digits(integer = 5, fraction = 0, message = "Zip code must be a number with a maximum of 5 digits")
+    private Long zipcode;
+
+    private Long addressId;
 }
