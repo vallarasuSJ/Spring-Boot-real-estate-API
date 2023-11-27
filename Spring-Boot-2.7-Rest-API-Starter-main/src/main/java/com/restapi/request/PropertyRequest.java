@@ -42,5 +42,7 @@ public class PropertyRequest {
     @Digits(integer = 5, fraction = 0, message = "Zip code must be a number with a maximum of 5 digits")
     private Long zipcode;
 
+    private Long categoryId;
+
     private Long addressId;
 }

@@ -19,7 +19,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/agent")
-@RolesAllowed(Role.ADMIN)
 public class AdminAgentController {
     @Autowired
     private APIResponse apiResponse;

@@ -19,7 +19,6 @@ public class AdminService {
                 .orElseThrow(() -> new ResourceNotFoundException("propertyId", "propertyId", propertyRequest.getId()));
         property.setApproved(true);
 
-        System.out.println(property.getPropertyName());
         propertyRepository.save(property);
         return property;
     }

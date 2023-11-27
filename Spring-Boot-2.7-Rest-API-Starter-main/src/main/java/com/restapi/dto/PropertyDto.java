@@ -31,6 +31,7 @@ public class PropertyDto {
            propertyResponse.setZipcode(property.getAddress().getZipcode());
            propertyResponse.setPhoto(property.getPhoto());
            propertyResponse.setPrice(property.getPrice());
+           propertyResponse.setApprove(property.isApproved());
            propertyResponses.add(propertyResponse);
        }
        return propertyResponses;

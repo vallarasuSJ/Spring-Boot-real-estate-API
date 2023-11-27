@@ -44,6 +44,11 @@ public class Property {
     @JoinColumn(name = "agent_id",referencedColumnName ="id")
     private Agent agent;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
     private boolean isApproved = false;
 
 }

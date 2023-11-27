@@ -5,11 +5,9 @@ import com.restapi.dto.PropertyDto;
 import com.restapi.exception.common.ResourceNotFoundException;
 import com.restapi.model.Address;
 import com.restapi.model.Agent;
+import com.restapi.model.Category;
 import com.restapi.model.Property;
-import com.restapi.repository.AddressRepository;
-import com.restapi.repository.AgentRepository;
-import com.restapi.repository.PropertyRepository;
-import com.restapi.repository.UserRepository;
+import com.restapi.repository.*;
 import com.restapi.request.PropertyRequest;
 import com.restapi.response.PropertyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,9 @@ public class PropertyService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public List<PropertyResponse> findAll() {
         List<Property> propertyList = propertyRepository.findAll();
         List<PropertyResponse> propertyResponses = propertyDto.mapToPropertyResponse(propertyList);
@@ -49,6 +50,8 @@ public class PropertyService {
 
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
+        Category category=categoryRepository.findById(propertyRequest.getCategoryId())
+                .orElseThrow(()->new ResourceNotFoundException("categoryId","categoryId",propertyRequest.getCategoryId()));
         Property property = propertyDto.mapToProperty(propertyRequest);
         Agent agent = agentRepository.findById(propertyRequest.getAgentId())
                 .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));

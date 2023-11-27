@@ -20,6 +20,7 @@ public class BookingResponse {
     private Long zipcode;
     private Long contactNumber;
     private Double price;
+    private Long customerId;
     private LocalDateTime bookedTime;
 
 }

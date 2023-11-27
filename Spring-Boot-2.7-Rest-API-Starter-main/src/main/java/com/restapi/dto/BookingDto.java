@@ -23,6 +23,7 @@ public class BookingDto {
             bookingResponse.setBookedTime(booked.getBookedTime());
             bookingResponse.setCity(booked.getProperty().getAddress().getCity());
             bookingResponse.setContactNumber(booked.getProperty().getAgent().getContactNumber());
+            bookingResponse.setCustomerId(booked.getAppUser().getId());
             bookingResponses.add(bookingResponse);
         }
         return bookingResponses;

@@ -19,5 +19,7 @@ public class PropertyResponse {
     private Long zipcode;
     private Long contactNumber;
     private Long addressId;
+    private Long categoryId;
+    private boolean isApprove;
 
 }
