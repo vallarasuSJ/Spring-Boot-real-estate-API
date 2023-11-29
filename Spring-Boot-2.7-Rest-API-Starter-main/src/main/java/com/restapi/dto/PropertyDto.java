@@ -34,6 +34,7 @@ public class PropertyDto {
            propertyResponse.setApprove(property.isApproved());
            propertyResponse.setContactNumber(property.getAgent().getContactNumber());
            propertyResponse.setCategoryId(property.getCategory().getId());
+           propertyResponse.setAgentName(property.getAgent().getAgentName());
            propertyResponses.add(propertyResponse);
        }
        return propertyResponses;

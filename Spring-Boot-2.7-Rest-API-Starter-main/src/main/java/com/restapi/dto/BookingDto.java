@@ -21,6 +21,7 @@ public class BookingDto {
             bookingResponse.setPrice(booked.getProperty().getPrice());
             bookingResponse.setAddress(booked.getProperty().getAddress().getAddress());
             bookingResponse.setBookedTime(booked.getBookedTime());
+            bookingResponse.setPhoto(booked.getProperty().getPhoto());
             bookingResponse.setCity(booked.getProperty().getAddress().getCity());
             bookingResponse.setContactNumber(booked.getProperty().getAgent().getContactNumber());
             bookingResponse.setCustomerId(booked.getAppUser().getId());

@@ -33,4 +33,11 @@ public class PropertyController {
         apiResponse.setData(propertyList);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<APIResponse> getAllProperties(@PathVariable Long id){
+        PropertyResponse propertyResponse=propertyService.getSelectedProperty(id);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(propertyResponse);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
 }

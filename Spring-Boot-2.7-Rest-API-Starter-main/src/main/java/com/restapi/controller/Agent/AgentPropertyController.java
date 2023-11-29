@@ -106,7 +106,7 @@ public class AgentPropertyController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/properties/{id}")
+    @GetMapping("/property/{id}")
     public ResponseEntity<APIResponse>getSelectedProperty(@PathVariable Long id){
         PropertyResponse propertyResponse=propertyService.getSelectedProperty(id);
         apiResponse.setStatus(HttpStatus.OK.value());

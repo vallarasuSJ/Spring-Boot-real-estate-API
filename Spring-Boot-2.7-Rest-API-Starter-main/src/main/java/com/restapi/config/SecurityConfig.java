@@ -60,6 +60,8 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/api/agent/category/all/**")
                 .permitAll()
+                .antMatchers("/api/agent/category/**")
+                .permitAll()
                 .antMatchers("/api/agent/downloadFile/**")
                 .permitAll()
                 .anyRequest()

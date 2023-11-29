@@ -14,6 +14,7 @@ import java.util.List;
 public class BookingResponse {
     private Long propertyId;
     private String name;
+    private String photo;
     private String propertyName;
     private String Address;
     private String city;
