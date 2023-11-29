@@ -13,7 +13,7 @@ public class PropertyResponse {
     private Long id;
     private String propertyName;
     private Double price;
-    private byte[] photo;
+    private String photo;
     private String address;
     private String city;
     private Long zipcode;

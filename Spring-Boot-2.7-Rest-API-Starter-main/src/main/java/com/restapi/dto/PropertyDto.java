@@ -32,6 +32,8 @@ public class PropertyDto {
            propertyResponse.setPhoto(property.getPhoto());
            propertyResponse.setPrice(property.getPrice());
            propertyResponse.setApprove(property.isApproved());
+           propertyResponse.setContactNumber(property.getAgent().getContactNumber());
+           propertyResponse.setCategoryId(property.getCategory().getId());
            propertyResponses.add(propertyResponse);
        }
        return propertyResponses;

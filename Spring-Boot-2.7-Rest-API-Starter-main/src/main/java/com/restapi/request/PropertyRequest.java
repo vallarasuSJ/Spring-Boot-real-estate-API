@@ -1,5 +1,7 @@
 package com.restapi.request;
 
+import com.restapi.model.Agent;
+import com.restapi.model.AppUser;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -17,7 +19,7 @@ public class PropertyRequest {
 
 //    @NotNull(message = "photo data cannot be null")
 //    @Size(min = 1, max = 10 * 1024 * 1024, message = "Photo size must be between 1 byte and 10MB")
-    private byte[] photo;
+    private String photo;
 
     @NotNull(message = "Price cannot be null")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
@@ -45,4 +47,8 @@ public class PropertyRequest {
     private Long categoryId;
 
     private Long addressId;
+
+    private AppUser appUser;
+
+    private Agent agent;
 }

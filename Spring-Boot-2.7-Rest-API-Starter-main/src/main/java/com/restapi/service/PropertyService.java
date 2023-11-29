@@ -11,9 +11,13 @@ import com.restapi.repository.*;
 import com.restapi.request.PropertyRequest;
 import com.restapi.response.PropertyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +42,11 @@ public class PropertyService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private StorageService storageService;
+
+
+
     public List<PropertyResponse> findAll() {
         List<Property> propertyList = propertyRepository.findAll();
         List<PropertyResponse> propertyResponses = propertyDto.mapToPropertyResponse(propertyList);
@@ -46,17 +55,17 @@ public class PropertyService {
 
 
     @Transactional
-    public List<PropertyResponse> create(PropertyRequest propertyRequest) {
-
+    public List<PropertyResponse> create(PropertyRequest propertyRequest,Long categoryId,Long agentId) {
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
-        Category category=categoryRepository.findById(propertyRequest.getCategoryId())
-                .orElseThrow(()->new ResourceNotFoundException("categoryId","categoryId",propertyRequest.getCategoryId()));
+        Category category=categoryRepository.findById(categoryId)
+                .orElseThrow(()->new ResourceNotFoundException("categoryId","categoryId",categoryId));
         Property property = propertyDto.mapToProperty(propertyRequest);
-        Agent agent = agentRepository.findById(propertyRequest.getAgentId())
-                .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));
+        Agent agent=agentRepository.findByUserId(agentId)
+                .orElseThrow(()->new ResourceNotFoundException("agentId","agentId",agentId));
         property.setAgent(agent);
         property.setAddress(address);
+        property.setCategory(category);
         propertyRepository.save(property);
         return findAll();
     }
@@ -69,7 +78,7 @@ public class PropertyService {
         property.setPrice(propertyRequest.getPrice());
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
-        Agent agent = agentRepository.findById(propertyRequest.getAgentId())
+        Agent agent = agentRepository.findById(propertyRequest.getAppUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));
         property.setAgent(agent);
         property.setAddress(address);
@@ -88,5 +97,12 @@ public class PropertyService {
         System.out.println(property);
         PropertyResponse propertyResponse=propertyDto.mapToPropertyDetail(property);
         return propertyResponse;
+    }
+
+    public File getFile(Long id) throws IOException {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("id", "id", id));
+        Resource resource = storageService.loadFileAsResource(property.getPhoto());
+        return resource.getFile();
     }
 }

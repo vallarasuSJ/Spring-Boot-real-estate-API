@@ -27,9 +27,8 @@ public class Property {
     @Column(nullable = false, length = 200)
     private Double price;
 
-    @Lob
-    @Column(name = "photo", columnDefinition="BLOB")
-    private byte[] photo;
+    @Column
+    private String photo;
 
     @OneToOne
     @JoinColumn(name = "address_id",referencedColumnName = "id")
