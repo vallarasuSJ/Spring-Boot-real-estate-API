@@ -35,7 +35,13 @@ public class CustomerBookingController {
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(bookingResponses);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
-
+    }
+    @GetMapping("/booking/{userId}")
+    public  ResponseEntity<APIResponse> getAllBookedProperties(@PathVariable Long userId){
+        List<BookingResponse> bookingResponses=bookingService.findUserBookings(userId);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(bookingResponses);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
     @DeleteMapping("/booking/cancel/{id}")
     public ResponseEntity<APIResponse> cancelBooking(@PathVariable Long id) {

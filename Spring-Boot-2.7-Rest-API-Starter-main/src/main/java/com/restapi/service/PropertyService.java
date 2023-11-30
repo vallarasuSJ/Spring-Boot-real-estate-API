@@ -71,15 +71,16 @@ public class PropertyService {
     }
 
 
-    public List<PropertyResponse> update(PropertyRequest propertyRequest) {
-        Property property=propertyRepository.findById(propertyRequest.getId())
-                .orElseThrow(()->new ResourceNotFoundException("id","id",propertyRequest.getId()));
+    public List<PropertyResponse> update(PropertyRequest propertyRequest, Long id, Long agentId) {
+        Property property=propertyRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("id","id",id));
         property.setPropertyName(propertyRequest.getPropertyName());
         property.setPrice(propertyRequest.getPrice());
+        property.setPhoto(property.getPhoto());
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
-        Agent agent = agentRepository.findById(propertyRequest.getAppUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", agentId));
         property.setAgent(agent);
         property.setAddress(address);
         propertyRepository.save(property);
@@ -104,5 +105,11 @@ public class PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("id", "id", id));
         Resource resource = storageService.loadFileAsResource(property.getPhoto());
         return resource.getFile();
+    }
+
+    public List<PropertyResponse> findAgentProperties(Long agentId) {
+        List<Property> propertyList = propertyRepository.findAll();
+        List<PropertyResponse> propertyResponses = propertyDto.mapToAgentPropertyResponse(agentId,propertyList);
+        return propertyResponses;
     }
 }

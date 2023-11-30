@@ -53,4 +53,26 @@ public class PropertyDto {
         return propertyResponse;
     }
 
+    public List<PropertyResponse> mapToAgentPropertyResponse(Long agentId, List<Property> propertyList) {
+        List<PropertyResponse>propertyResponses=new ArrayList<>();
+        for(Property property:propertyList){
+            if(agentId==property.getAgent().getAppUser().getId()) {
+                PropertyResponse propertyResponse = new PropertyResponse();
+                propertyResponse.setId(property.getId());
+                propertyResponse.setPropertyName(property.getPropertyName());
+                propertyResponse.setAddress(property.getAddress().getAddress());
+                propertyResponse.setCity(property.getAddress().getCity());
+                propertyResponse.setZipcode(property.getAddress().getZipcode());
+                propertyResponse.setPhoto(property.getPhoto());
+                propertyResponse.setPrice(property.getPrice());
+                propertyResponse.setApprove(property.isApproved());
+                propertyResponse.setContactNumber(property.getAgent().getContactNumber());
+                propertyResponse.setCategoryId(property.getCategory().getId());
+                propertyResponse.setAgentName(property.getAgent().getAgentName());
+                propertyResponses.add(propertyResponse);
+            }
+        }
+        return propertyResponses;
+
+    }
 }

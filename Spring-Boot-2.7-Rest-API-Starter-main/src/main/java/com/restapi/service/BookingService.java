@@ -56,4 +56,11 @@ public class BookingService {
         bookedRepository.deleteById(id);
         return findAll();
     }
+
+    public List<BookingResponse> findUserBookings(Long userId) {
+        List<Booked> bookedList = bookedRepository.findAll();
+        List<BookingResponse> bookingResponses=bookingDto.mapToUserBookingResponse(userId,bookedList);
+        return bookingResponses;
+
+    }
 }

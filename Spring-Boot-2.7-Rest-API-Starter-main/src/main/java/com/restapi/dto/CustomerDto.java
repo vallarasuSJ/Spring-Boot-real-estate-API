@@ -46,16 +46,18 @@ public class CustomerDto {
     public List<BookingResponse> maptoCustomerBookings(List<Booked> bookedList) {
         List<BookingResponse> customerBookings=new ArrayList<>();
         for(Booked booked:bookedList){
-            BookingResponse bookingResponse=new BookingResponse();
-            bookingResponse.setName(booked.getAppUser().getCustomer().getCustomerName());
-            bookingResponse.setPropertyName(booked.getProperty().getPropertyName());
-            bookingResponse.setContactNumber(booked.getAppUser().getCustomer().getContactNumber());
-            bookingResponse.setAddress(booked.getProperty().getAddress().getAddress());
-            bookingResponse.setCity(booked.getProperty().getAddress().getCity());
-            bookingResponse.setPrice(booked.getProperty().getPrice());
-            bookingResponse.setZipcode(booked.getProperty().getAddress().getZipcode());
-            bookingResponse.setBookedTime(booked.getBookedTime());
-            customerBookings.add(bookingResponse);
+                BookingResponse bookingResponse = new BookingResponse();
+                bookingResponse.setPropertyId(booked.getProperty().getId());
+                bookingResponse.setPhoto(booked.getProperty().getPhoto());
+                bookingResponse.setName(booked.getAppUser().getCustomer().getCustomerName());
+                bookingResponse.setPropertyName(booked.getProperty().getPropertyName());
+                bookingResponse.setContactNumber(booked.getAppUser().getCustomer().getContactNumber());
+                bookingResponse.setAddress(booked.getProperty().getAddress().getAddress());
+                bookingResponse.setCity(booked.getProperty().getAddress().getCity());
+                bookingResponse.setPrice(booked.getProperty().getPrice());
+                bookingResponse.setZipcode(booked.getProperty().getAddress().getZipcode());
+                bookingResponse.setBookedTime(booked.getBookedTime());
+                customerBookings.add(bookingResponse);
         }
         return customerBookings;
     }

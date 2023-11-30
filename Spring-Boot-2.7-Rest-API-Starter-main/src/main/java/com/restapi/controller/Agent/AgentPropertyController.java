@@ -54,17 +54,38 @@ public class AgentPropertyController {
                                                       @RequestParam("propertyName") String propertyName,
                                                       @RequestParam("price") Double price,
                                                       @RequestParam("city") String city,
-                                                      @RequestParam("zipcode") Long zipcode,@PathVariable Long categoryId,@PathVariable Long agentId) throws IOException {
+                                                      @RequestParam("zipcode") Long zipcode, @PathVariable Long categoryId, @PathVariable Long agentId) throws IOException {
         String file = storageService.storeFile(photo);
-        PropertyRequest propertyRequest=new PropertyRequest();
+        PropertyRequest propertyRequest = new PropertyRequest();
         propertyRequest.setPropertyName(propertyName);
         propertyRequest.setPrice(price);
         propertyRequest.setAddress(address);
         propertyRequest.setPhoto(file);
         propertyRequest.setCity(city);
         propertyRequest.setZipcode(zipcode);
-        List<PropertyResponse> propertyResponses = propertyService.create(propertyRequest,categoryId,agentId);
+        List<PropertyResponse> propertyResponses = propertyService.create(propertyRequest, categoryId, agentId);
         apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(propertyResponses);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/properties/{id}/{agentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<APIResponse> updateProperty(
+                                                      @RequestParam("address") String address,
+                                                      @RequestParam("propertyName") String propertyName,
+                                                      @RequestParam("price") Double price,
+                                                      @RequestParam("city") String city,
+                                                      @RequestParam("zipcode") Long zipcode, @PathVariable Long agentId,@PathVariable Long id) throws IOException {
+
+        PropertyRequest propertyRequest = new PropertyRequest();
+        propertyRequest.setPropertyName(propertyName);
+        propertyRequest.setPrice(price);
+        propertyRequest.setAddress(address);
+
+        propertyRequest.setCity(city);
+        propertyRequest.setZipcode(zipcode);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        List<PropertyResponse> propertyResponses = propertyService.update(propertyRequest,id, agentId);
         apiResponse.setData(propertyResponses);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
@@ -90,14 +111,6 @@ public class AgentPropertyController {
     }
 
 
-    @PutMapping("/properties")
-    public ResponseEntity<APIResponse> updateProperty(@Valid @RequestBody PropertyRequest propertyRequest) {
-        List<PropertyResponse> propertyResponses = propertyService.update(propertyRequest);
-        apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(propertyResponses);
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
-
     @DeleteMapping("/property/{id}")
     public ResponseEntity<APIResponse> deleteProperty(@PathVariable Long id) {
         List<PropertyResponse> propertyResponses = propertyService.deleteProperty(id);
@@ -107,11 +120,19 @@ public class AgentPropertyController {
     }
 
     @GetMapping("/property/{id}")
-    public ResponseEntity<APIResponse>getSelectedProperty(@PathVariable Long id){
-        PropertyResponse propertyResponse=propertyService.getSelectedProperty(id);
+    public ResponseEntity<APIResponse> getSelectedProperty(@PathVariable Long id) {
+        PropertyResponse propertyResponse = propertyService.getSelectedProperty(id);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(propertyResponse);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/properties/{agentId}")
+    public ResponseEntity<APIResponse> getAllProperties(@PathVariable Long agentId){
+        List<PropertyResponse> propertyList=propertyService.findAgentProperties(agentId);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(propertyList);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
 }
