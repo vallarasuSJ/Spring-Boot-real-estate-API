@@ -3,10 +3,7 @@ package com.restapi.service;
 import com.restapi.dto.AddressDto;
 import com.restapi.dto.PropertyDto;
 import com.restapi.exception.common.ResourceNotFoundException;
-import com.restapi.model.Address;
-import com.restapi.model.Agent;
-import com.restapi.model.Category;
-import com.restapi.model.Property;
+import com.restapi.model.*;
 import com.restapi.repository.*;
 import com.restapi.request.PropertyRequest;
 import com.restapi.response.PropertyResponse;
@@ -71,7 +68,7 @@ public class PropertyService {
     }
 
 
-    public List<PropertyResponse> update(PropertyRequest propertyRequest, Long id, Long agentId) {
+    public List<PropertyResponse> update(PropertyRequest propertyRequest, Long id) {
         Property property=propertyRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("id","id",id));
         property.setPropertyName(propertyRequest.getPropertyName());
@@ -79,8 +76,8 @@ public class PropertyService {
         property.setPhoto(property.getPhoto());
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
-        Agent agent = agentRepository.findById(agentId)
-                .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", agentId));
+        Agent agent = agentRepository.findById(propertyRequest.getAgentId())
+                .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));
         property.setAgent(agent);
         property.setAddress(address);
         propertyRepository.save(property);

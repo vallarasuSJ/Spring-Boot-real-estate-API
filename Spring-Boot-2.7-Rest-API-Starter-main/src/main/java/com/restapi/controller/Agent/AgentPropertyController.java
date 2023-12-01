@@ -81,11 +81,13 @@ public class AgentPropertyController {
         propertyRequest.setPropertyName(propertyName);
         propertyRequest.setPrice(price);
         propertyRequest.setAddress(address);
-
         propertyRequest.setCity(city);
         propertyRequest.setZipcode(zipcode);
+        AppUser appUser=userRepository.findById(agentId)
+                .orElseThrow(()->new ResourceNotFoundException("agentId","agentId",agentId));
+        propertyRequest.setAgentId(appUser.getAgent().getId());
         apiResponse.setStatus(HttpStatus.OK.value());
-        List<PropertyResponse> propertyResponses = propertyService.update(propertyRequest,id, agentId);
+        List<PropertyResponse> propertyResponses = propertyService.update(propertyRequest,id);
         apiResponse.setData(propertyResponses);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
