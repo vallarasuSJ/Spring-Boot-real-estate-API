@@ -1,5 +1,6 @@
 package com.restapi.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.restapi.model.Booked;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class BookingResponse {
     private Long contactNumber;
     private Double price;
     private Long customerId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDateTime bookedTime;
 
 }
