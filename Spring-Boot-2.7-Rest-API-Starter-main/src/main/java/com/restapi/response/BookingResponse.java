@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class BookingResponse {
+    private Long bookedId;
     private Long propertyId;
     private String name;
     private String photo;

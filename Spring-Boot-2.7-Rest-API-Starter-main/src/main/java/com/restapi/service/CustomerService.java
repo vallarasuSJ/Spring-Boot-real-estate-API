@@ -60,6 +60,7 @@ public class CustomerService {
 
     public List<BookingResponse> findCustomerBookings() {
         List<Booked> bookedList=bookedRepository.findAll();
+        System.out.println(bookedList.get(0));
         List<BookingResponse> customerBookings=customerDto.maptoCustomerBookings(bookedList);
         return customerBookings;
 

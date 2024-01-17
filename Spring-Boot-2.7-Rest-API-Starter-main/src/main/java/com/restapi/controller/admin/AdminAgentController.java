@@ -29,6 +29,8 @@ public class AdminAgentController {
     @Autowired
     private AgentService agentService;
 
+
+    //Retrieve details of all agents.
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAgentDetails() {
         List<AgentResponse> agentResponses = agentService.findAll();
@@ -37,6 +39,7 @@ public class AdminAgentController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    //Retrieve details of all agent and their properties
     @GetMapping("/properties/all")
     public ResponseEntity<APIResponse> getAgentPropertyDetails(){
         List<AgentPropertyResponse> agentPropertyResponses=agentService.findAllAgentsProperties();

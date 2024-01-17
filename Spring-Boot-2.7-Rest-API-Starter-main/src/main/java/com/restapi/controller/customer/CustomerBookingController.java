@@ -22,32 +22,29 @@ public class CustomerBookingController {
     @Autowired
     private BookingService bookingService;
 
+    //Endpoint to create a booking for a property
     @PostMapping("/booking")
-    public ResponseEntity<APIResponse> bookingProperty(@RequestBody BookingRequest bookingRequest){
-        List<BookingResponse> bookingResponses=bookingService.createBooking(bookingRequest);
+    public ResponseEntity<APIResponse> bookingProperty(@RequestBody BookingRequest bookingRequest) {
+       bookingService.createBooking(bookingRequest);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(bookingResponses);
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
-    @GetMapping("/booking/all")
-    public  ResponseEntity<APIResponse> getAllBookedProperties(){
-        List<BookingResponse> bookingResponses=bookingService.findAll();
-        apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(bookingResponses);
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
-    }
+
+    //endpoint to get all booked property by the specific user
     @GetMapping("/booking/{userId}")
-    public  ResponseEntity<APIResponse> getAllBookedProperties(@PathVariable Long userId){
-        List<BookingResponse> bookingResponses=bookingService.findUserBookings(userId);
+    public ResponseEntity<APIResponse> getAllBookedProperties(@PathVariable Long userId) {
+        List<BookingResponse> bookingResponses = bookingService.findUserBookings(userId);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(bookingResponses);
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
+
+    //endpoint to cancel booking
     @DeleteMapping("/booking/cancel/{id}")
     public ResponseEntity<APIResponse> cancelBooking(@PathVariable Long id) {
-        List<BookingResponse> bookingResponses = bookingService.cancelBooking(id);
+        bookingService.cancelBooking(id);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(bookingResponses);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }

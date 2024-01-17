@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class HelloController {
 
+    //Ensures that the user making the request has the 'ROLE_USER' role
     @GetMapping("/hello")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String hello() {
         return "Hello World";
     }
 
+    // Ensures that the user making the request has the 'ROLE_ADMIN' role
     @GetMapping("/adminHello")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String adminHello() {

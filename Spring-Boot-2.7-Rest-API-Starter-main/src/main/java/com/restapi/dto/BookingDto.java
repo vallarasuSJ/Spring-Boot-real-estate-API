@@ -15,6 +15,7 @@ public class BookingDto {
         List<BookingResponse> bookingResponses=new ArrayList<>();
         for(Booked booked:bookedList){
                 BookingResponse bookingResponse = new BookingResponse();
+                bookingResponse.setBookedId(booked.getId());
                 bookingResponse.setPropertyId(booked.getProperty().getId());
                 bookingResponse.setName(booked.getProperty().getAgent().getAgentName());
                 bookingResponse.setPropertyName(booked.getProperty().getPropertyName());
@@ -35,6 +36,7 @@ public class BookingDto {
         for(Booked booked:bookedList){
             if(userId==booked.getAppUser().getId()) {
                 BookingResponse bookingResponse = new BookingResponse();
+                bookingResponse.setBookedId(booked.getId());
                 bookingResponse.setPropertyId(booked.getProperty().getId());
                 bookingResponse.setName(booked.getProperty().getAgent().getAgentName());
                 bookingResponse.setPropertyName(booked.getProperty().getPropertyName());

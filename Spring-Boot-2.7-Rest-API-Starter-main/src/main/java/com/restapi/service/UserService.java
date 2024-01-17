@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -75,5 +76,14 @@ public class UserService {
         List<Role> roleList=roleRepository.findAll();
         List<RoleResponse> roleResponses=authDto.maptoRole(roleList);
         return roleResponses;
+    }
+
+    public List<AuthResponse> findAllUsers() {
+        List<AppUser> users= userRepository.findAllUsers();
+        List<AuthResponse> authResponseList=new ArrayList<>();
+        for(AppUser user:users) {
+            authResponseList.add(authDto.mapToAuthResponse(user));
+        }
+        return  authResponseList;
     }
 }

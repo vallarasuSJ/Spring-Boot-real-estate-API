@@ -22,4 +22,5 @@ public class PropertyResponse {
     private Long categoryId;
     private boolean isApprove;
     private String agentName;
+    private String categoryName;
 }

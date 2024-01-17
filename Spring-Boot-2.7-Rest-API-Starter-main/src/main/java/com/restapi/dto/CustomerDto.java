@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 public class CustomerDto {
     public static Customer maptoCustomer(RegisterRequest registerRequest, AppUser appUser) {
-        System.out.println("hello");
         Customer customer=new Customer();
         customer.setCustomerName(registerRequest.getName());
         customer.setContactNumber(registerRequest.getContact());

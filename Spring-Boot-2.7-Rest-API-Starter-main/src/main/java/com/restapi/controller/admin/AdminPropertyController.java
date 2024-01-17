@@ -25,6 +25,7 @@ public class AdminPropertyController {
     @Autowired
     private PropertyService propertyService;
 
+    //retrieves all the property details
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllProperties() {
         List<PropertyResponse> propertyList = propertyService.findAll();
@@ -33,9 +34,12 @@ public class AdminPropertyController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+
+    //Updates the approval status of a property based on the provided PropertyRequest.
     @PutMapping("/update")
     public ResponseEntity<APIResponse> allowProperty(@RequestBody PropertyRequest propertyRequest) {
-        Property property = adminService.allowProperty(propertyRequest);
-        return getAllProperties();
+        adminService.allowProperty(propertyRequest);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }

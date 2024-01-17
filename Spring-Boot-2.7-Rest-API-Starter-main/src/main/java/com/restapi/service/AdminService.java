@@ -14,12 +14,11 @@ public class AdminService {
     @Autowired
     PropertyRepository propertyRepository;
 
-    public Property allowProperty(PropertyRequest propertyRequest) {
+    public void allowProperty(PropertyRequest propertyRequest) {
         Property property = propertyRepository.findById(propertyRequest.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("propertyId", "propertyId", propertyRequest.getId()));
         property.setApproved(true);
 
         propertyRepository.save(property);
-        return property;
     }
 }

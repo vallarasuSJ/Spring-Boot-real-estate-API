@@ -35,16 +35,16 @@ public class Property {
     private Address address;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "property")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "property")
     private List<Booked> bookedList;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id",referencedColumnName ="id")
     private Agent agent;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 

@@ -26,6 +26,7 @@ public class AuthController {
 
 
 
+    //endpoint for user login
     @PostMapping("/login")
     public ResponseEntity<APIResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         AuthResponse loggedInUser = userService.login(loginRequest);
@@ -34,6 +35,7 @@ public class AuthController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    //endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<APIResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
         AuthResponse registeredUser = userService.register(registerRequest);
@@ -42,11 +44,21 @@ public class AuthController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    //endpoint to get all roles
     @GetMapping("/role")
-    public  ResponseEntity<APIResponse> getRoles(){
-        List<RoleResponse> getRole=userService.getRoles();
+    public  ResponseEntity<APIResponse> getRoles() {
+        List<RoleResponse> getRole = userService.getRoles();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(getRole);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    //endpoint to get information about all users
+    @GetMapping("/allUsers")
+    public ResponseEntity<APIResponse> getAllUsers(){
+        List<AuthResponse> registeredUser = userService.findAllUsers();
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(registeredUser);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 

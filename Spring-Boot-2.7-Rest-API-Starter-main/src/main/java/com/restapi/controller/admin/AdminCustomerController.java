@@ -29,6 +29,7 @@ public class AdminCustomerController {
     @Autowired
     private CustomerService customerService;
 
+    //retrieve all customer details
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllCustomers(){
         List<CustomerResponse> customerResponses=customerService.findAll();
@@ -37,8 +38,10 @@ public class AdminCustomerController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    //retrieve all details of customer bookings
     @GetMapping("/bookings/all")
-    public ResponseEntity<APIResponse> getAgentPropertyDetails(){
+    public ResponseEntity<APIResponse> getAllCustomerBookings(){
+        System.out.println("controller");
         List<BookingResponse> customerBookings=customerService.findCustomerBookings();
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(customerBookings);

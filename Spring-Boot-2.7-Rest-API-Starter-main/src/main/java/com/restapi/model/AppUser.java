@@ -35,7 +35,7 @@ public class AppUser {
     private String password;
 
     @JsonIgnore
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role roles;
 
@@ -48,7 +48,7 @@ public class AppUser {
     private Agent agent;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "appUser")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "appUser")
     private List<Booked> bookedList= new ArrayList<>();
 
     @CreationTimestamp

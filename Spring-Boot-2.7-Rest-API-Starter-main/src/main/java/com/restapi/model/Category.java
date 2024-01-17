@@ -22,7 +22,7 @@ public class Category {
     @Column(nullable = false, length = 200)
     private String title;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "category")
     private List<Property> propertyList = new ArrayList<>();
 
 }

@@ -3,6 +3,7 @@ package com.restapi.config;
 import com.restapi.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,8 @@ public class SecurityConfig {
     @Autowired
     @Qualifier("delegatedAuthenticationEntryPoint")
     AuthenticationEntryPoint authEntryPoint;
+    @Value("${security.permit-all-endpoints}")
+    private String permitAllEndpoints;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -48,21 +51,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/h2-console/**")
-                .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/swagger-ui/**")
-                .permitAll()
-                .antMatchers("/api/admin/agent/**")
-                .permitAll()
-                .antMatchers("/api/property/all/**")
-                .permitAll()
-                .antMatchers("/api/agent/category/all/**")
-                .permitAll()
-                .antMatchers("/api/agent/category/**")
-                .permitAll()
-                .antMatchers("/api/agent/downloadFile/**")
+//                .antMatchers("/h2-console/**")
+//                .permitAll()
+//                .antMatchers("/api/auth/**")
+//                .permitAll()
+//                .antMatchers("/swagger-ui/**")
+//                .permitAll()
+//                .antMatchers("/api/admin/agent/**")
+//                .permitAll()
+//                .antMatchers("/api/property/all/**")
+//                .permitAll()
+//                .antMatchers("/api/agent/category/all/**")
+//                .permitAll()
+//                .antMatchers("/api/agent/category/**")
+//                .permitAll()
+//                .antMatchers("/api/agent/downloadFile/**")
+//                .permitAll()
+                .antMatchers(permitAllEndpoints.split(","))
                 .permitAll()
                 .anyRequest()
                 .authenticated()

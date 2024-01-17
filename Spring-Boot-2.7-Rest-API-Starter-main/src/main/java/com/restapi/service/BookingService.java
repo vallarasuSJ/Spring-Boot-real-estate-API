@@ -39,7 +39,7 @@ public class BookingService {
         return bookingResponses;
     }
 
-    public List<BookingResponse> createBooking(BookingRequest bookingRequest) {
+    public void createBooking(BookingRequest bookingRequest) {
         Booked booked=new Booked();
         AppUser appUser=userRepository.findById(bookingRequest.getCustomerId())
                 .orElseThrow(()->new ResourceNotFoundException("userId","userId",bookingRequest.getCustomerId()));
@@ -48,13 +48,12 @@ public class BookingService {
                 .orElseThrow(()->new ResourceNotFoundException("Id","propertyId",bookingRequest.getId()));
         booked.setProperty(property);
         bookedRepository.save(booked);
-        return findAll();
+
     }
 
 
-    public List<BookingResponse> cancelBooking(Long id) {
+    public void cancelBooking(Long id) {
         bookedRepository.deleteById(id);
-        return findAll();
     }
 
     public List<BookingResponse> findUserBookings(Long userId) {

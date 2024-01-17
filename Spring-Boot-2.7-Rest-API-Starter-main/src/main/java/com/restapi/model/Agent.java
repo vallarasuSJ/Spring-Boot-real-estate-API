@@ -32,7 +32,7 @@ public class Agent {
     private AppUser appUser;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "agent")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "agent")
     private List<Property> propertyList= new ArrayList<>();
 
 }

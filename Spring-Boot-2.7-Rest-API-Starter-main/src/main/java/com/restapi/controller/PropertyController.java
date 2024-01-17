@@ -26,6 +26,7 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
+    //endpoint to get all properties
     @GetMapping("/all")
     public ResponseEntity<APIResponse> getAllProperties(){
         List<PropertyResponse> propertyList=propertyService.findAll();
@@ -34,8 +35,11 @@ public class PropertyController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+
+
+    //endpoint to get selected properties
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getAllProperties(@PathVariable Long id){
+    public ResponseEntity<APIResponse> getSelectedProperties(@PathVariable Long id){
         PropertyResponse propertyResponse=propertyService.getSelectedProperty(id);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(propertyResponse);

@@ -45,14 +45,30 @@ public class PropertyService {
 
 
     public List<PropertyResponse> findAll() {
-        List<Property> propertyList = propertyRepository.findAll();
+        List<Property> propertyList = propertyRepository.findAllAvailableProperties();
         List<PropertyResponse> propertyResponses = propertyDto.mapToPropertyResponse(propertyList);
         return propertyResponses;
     }
 
 
+//    @Transactional
+//    public List<PropertyResponse> create(PropertyRequest propertyRequest,Long categoryId,Long agentId) {
+//        Address address = AddressDto.mapToAddress(propertyRequest);
+//        address = addressRepository.save(address);
+//        Category category=categoryRepository.findById(categoryId)
+//                .orElseThrow(()->new ResourceNotFoundException("categoryId","categoryId",categoryId));
+//        Property property = propertyDto.mapToProperty(propertyRequest);
+//        Agent agent=agentRepository.findByUserId(agentId)
+//                .orElseThrow(()->new ResourceNotFoundException("agentId","agentId",agentId));
+//        property.setAgent(agent);
+//        property.setAddress(address);
+//        property.setCategory(category);
+//        propertyRepository.save(property);
+//        return findAll();
+//    }
+
     @Transactional
-    public List<PropertyResponse> create(PropertyRequest propertyRequest,Long categoryId,Long agentId) {
+    public void create(PropertyRequest propertyRequest,Long categoryId,Long agentId) {
         Address address = AddressDto.mapToAddress(propertyRequest);
         address = addressRepository.save(address);
         Category category=categoryRepository.findById(categoryId)
@@ -64,11 +80,10 @@ public class PropertyService {
         property.setAddress(address);
         property.setCategory(category);
         propertyRepository.save(property);
-        return findAll();
     }
 
 
-    public List<PropertyResponse> update(PropertyRequest propertyRequest, Long id) {
+    public void update(PropertyRequest propertyRequest, Long id) {
         Property property=propertyRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("id","id",id));
         property.setPropertyName(propertyRequest.getPropertyName());
@@ -80,13 +95,11 @@ public class PropertyService {
                 .orElseThrow(() -> new ResourceNotFoundException("agentId", "agentId", propertyRequest.getAgentId()));
         property.setAgent(agent);
         property.setAddress(address);
-        propertyRepository.save(property);
-        return findAll();
+        Property savedProperty=propertyRepository.save(property);
     }
-
-    public List<PropertyResponse> deleteProperty(Long id) {
+    
+    public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
-        return findAll();
     }
 
     public PropertyResponse getSelectedProperty(Long id) {

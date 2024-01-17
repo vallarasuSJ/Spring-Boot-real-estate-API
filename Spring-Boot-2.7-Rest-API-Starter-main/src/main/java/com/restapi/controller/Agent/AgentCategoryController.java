@@ -24,14 +24,15 @@ public class AgentCategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    //Creates a new category based on the provided CategoryRequest.
     @PostMapping
     public ResponseEntity<APIResponse> createCategory(@Valid @RequestBody CategoryRequest categoryRequest){
-        List<CategoryResponse> categoryResponses=categoryService.createCategory(categoryRequest);
+        categoryService.createCategory(categoryRequest);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(categoryResponses);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    //Retrieves details of all categories.
     @GetMapping("/all")
     public ResponseEntity<APIResponse>getAllCategories(){
         List<CategoryResponse> categoryResponses=categoryService.findAll();
@@ -40,12 +41,21 @@ public class AgentCategoryController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    //Retrieves details of properties belonging to a specific category.
+//    @GetMapping("/{categoryId}")
+//    public ResponseEntity<APIResponse> getCategoryProperties(@PathVariable Long categoryId) {
+//        List<CategoryResponse> categoryResponses = categoryService.getCategoryProperties(categoryId);
+//        apiResponse.setStatus(HttpStatus.OK.value());
+//        apiResponse.setData(categoryResponses);
+//        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+//    }
+
     @GetMapping("/{categoryId}")
-    public ResponseEntity<APIResponse> getCategoryProperties(@PathVariable Long categoryId){
-        List<CategoryResponse> categoryResponses=categoryService.getCategoryProperties(categoryId);
+    public ResponseEntity<APIResponse> getCategoryProperties(@PathVariable Long categoryId) {
+        List<PropertyResponse> categoryProperties = categoryService.getCategoryProperties(categoryId);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(categoryResponses);
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        apiResponse.setData(categoryProperties);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
 

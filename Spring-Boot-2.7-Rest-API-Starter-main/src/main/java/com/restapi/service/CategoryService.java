@@ -8,6 +8,7 @@ import com.restapi.repository.CategoryRepository;
 import com.restapi.repository.PropertyRepository;
 import com.restapi.request.CategoryRequest;
 import com.restapi.response.CategoryResponse;
+import com.restapi.response.PropertyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,11 @@ public class CategoryService {
     @Autowired
     private CategoryDto categoryDto;
 
-    public List<CategoryResponse> createCategory(CategoryRequest categoryRequest) {
+    public void createCategory(CategoryRequest categoryRequest) {
         Category category=new Category();
         category.setId(categoryRequest.getId());
         category.setTitle(categoryRequest.getTitle());
         categoryRepository.save(category);
-        return findAll();
     }
 
     public List<CategoryResponse> findAll() {
@@ -39,9 +39,9 @@ public class CategoryService {
         return categoryResponses;
     }
 
-    public List<CategoryResponse> getCategoryProperties(Long categoryId) {
-        List<Property> propertyList=propertyRepository.findAll();
-        List<CategoryResponse> categoryResponses=categoryDto.mapToCategoryProperties(categoryId,propertyList);
-        return categoryResponses;
+    public List<PropertyResponse> getCategoryProperties(Long categoryId) {
+        List<Property> propertyList = propertyRepository.findAllAvailableProperties();
+        List<PropertyResponse> categoryProperties=categoryDto.mapToCategoryProperties(categoryId,propertyList);
+        return categoryProperties;
     }
 }
