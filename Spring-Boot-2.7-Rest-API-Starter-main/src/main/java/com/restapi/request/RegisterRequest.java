@@ -3,7 +3,9 @@ package com.restapi.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -22,8 +24,8 @@ public class RegisterRequest {
     @Size(min = 2, message = "Name should have at least 2 characters")
     private String name;
 
-    @NotEmpty
-    @Size(min = 10, message = "contact should have at least 10 characters")
+    @NotNull
+    @Min(value = 10, message = "Contact should be at least 10")
     private Long contact;
 
     @Size(min = 2, message = "role should have at least 2 characters")
